@@ -3,6 +3,10 @@ const express = require('express');
 require('./config/db');
 require('./config/redis');
 
+//Routes import
+const authRoutes = require('./routes/authRoutes.js');
+const uploadRoutes = require('./routes/uploadRoutes.js');
+
 const app = express();
 app.use(express.json());
 
@@ -11,9 +15,10 @@ app.get('/' , (req, res) => {
     res.json({ message : "File upload API is running" })
 });
 
-//Authentication Route
-const authRoutes = require('./routes/authRoutes.js');
+
 app.use('/auth', authRoutes);
+app.use('/upload', uploadRoutes);
+
 
 const PORT = process.env.PORT || 3000;
 
