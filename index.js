@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 require('./config/db');
 require('./config/redis');
+require('./workers/fileWorker');
 
 //Routes import
 const authRoutes = require('./routes/authRoutes.js');
@@ -18,6 +19,7 @@ app.get('/' , (req, res) => {
 
 app.use('/auth', authRoutes);
 app.use('/upload', uploadRoutes);
+app.use('/files', uploadRoutes);
 
 
 const PORT = process.env.PORT || 3000;
