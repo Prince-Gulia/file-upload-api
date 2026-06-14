@@ -8,7 +8,7 @@ const fileFilter = (req, file, cb) => {
     if(allowedTypes.includes(file.mimetype)) {
         cb(null, true);
     } else{
-        cb( new Error('Only images (jpeg, png, webp) and PDFs are allowed') )
+        cb( new Error('Only images (jpeg, png, webp) and PDFs are allowed'), false)
     }   
 };
 
