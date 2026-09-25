@@ -28,6 +28,13 @@ app.use('/auth', authRoutes);
 app.use('/upload', uploadRoutes);
 app.use('/files', uploadRoutes);
 
+// Global Error Handler - returns clean JSON errors instead of HTML pages
+app.use((err, req, res, next) => {
+  console.error('Express Error:', err.message);
+  res.status(err.status || 500).json({
+    message: err.message || 'Internal Server Error'
+  });
+});
 
 const PORT = process.env.PORT || 3000;
 

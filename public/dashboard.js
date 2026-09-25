@@ -94,6 +94,15 @@ function validateFile(file) {
   return null;
 }
 
+async function safeParseJson(res) {
+  const contentType = res.headers.get("content-type") || "";
+  if (contentType.includes("application/json")) {
+    return await res.json();
+  }
+  const text = await res.text();
+  throw new Error(text.includes("<!DOCTYPE") ? "Server error occurred. Please try again." : text || `HTTP ${res.status}`);
+}
+
 async function apiFetch(path, opts = {}) {
   const headers = opts.headers || {};
   if (accessToken) {
@@ -197,7 +206,7 @@ uploadBtn.addEventListener("click", async () => {
       method: "POST",
       body: form,
     });
-    const data = await res.json();
+    const data = await safeParseJson(res);
     if (!res.ok) {
       throw new Error(data.message || "Upload failed");
     }
@@ -219,7 +228,7 @@ async function loadJobs() {
 
   try {
     const res = await apiFetch(ENDPOINTS.files);
-    const data = await res.json();
+    const data = await safeParseJson(res);
     if (!res.ok) throw new Error(data.message || "Failed to load jobs");
 
     const files = data.files || [];
