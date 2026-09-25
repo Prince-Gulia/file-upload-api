@@ -4,14 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>File Processing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Login -->
+  <!-- Auth -->
   <div id="login-view">
-    <div class="login-box">
+    <div class="login-box glass-card">
       <h1>file-processing</h1>
+
+      <!-- Login form -->
       <form id="login-form">
         <label for="login-email">Email</label>
         <input type="email" id="login-email" name="email" required autocomplete="email">
@@ -19,13 +24,26 @@
         <input type="password" id="login-password" name="password" required autocomplete="current-password">
         <button type="submit" id="login-btn">Log in</button>
         <p id="login-error" class="error" hidden></p>
+        <p class="auth-toggle">No account? <button type="button" id="show-signup" class="link-btn">Sign up</button></p>
+      </form>
+
+      <!-- Signup form -->
+      <form id="signup-form" hidden>
+        <label for="signup-email">Email</label>
+        <input type="email" id="signup-email" name="email" required autocomplete="email">
+        <label for="signup-password">Password</label>
+        <input type="password" id="signup-password" name="password" required autocomplete="new-password">
+        <button type="submit" id="signup-btn">Sign up</button>
+        <p id="signup-error" class="error" hidden></p>
+        <p id="signup-success" class="success" hidden></p>
+        <p class="auth-toggle">Have an account? <button type="button" id="show-login" class="link-btn">Log in</button></p>
       </form>
     </div>
   </div>
 
   <!-- App -->
   <div id="app-view" hidden>
-    <header>
+    <header class="glass-card" style="margin-bottom: 32px; border-radius: 16px;">
       <span class="header-title">file-processing</span>
       <span id="user-email" class="header-meta"></span>
       <button id="logout-btn" class="link-btn">Log out</button>
@@ -33,7 +51,7 @@
 
     <main>
       <!-- Upload section -->
-      <section class="section">
+      <section class="section glass-card">
         <h2>Upload file</h2>
         <p class="hint">Images (JPEG, PNG, WebP) and PDFs, up to 10 MB.</p>
 
@@ -54,7 +72,7 @@
       </section>
 
       <!-- Jobs table -->
-      <section class="section">
+      <section class="section glass-card">
         <div class="section-header">
           <h2>Jobs</h2>
           <button id="refresh-btn" class="link-btn">Refresh</button>

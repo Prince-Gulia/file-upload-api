@@ -1,4 +1,20 @@
-/* ── Reset & base ────────────────────────────────────── */
+/* ── Premium Modern Dark Theme ────────────────────────── */
+
+:root {
+  --bg-color: #0f172a;
+  --card-bg: rgba(30, 41, 59, 0.7);
+  --card-border: rgba(255, 255, 255, 0.1);
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --accent: #6366f1;
+  --accent-hover: #4f46e5;
+  --accent-glow: rgba(99, 102, 241, 0.4);
+  --danger: #ef4444;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --input-bg: rgba(15, 23, 42, 0.6);
+  --input-border: rgba(255, 255, 255, 0.15);
+}
 
 *,
 *::before,
@@ -9,12 +25,27 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Helvetica, Arial, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 14px;
   line-height: 1.5;
-  color: #1a1a1a;
-  background: #f5f5f5;
+  color: var(--text-main);
+  background: var(--bg-color);
+  background-image: radial-gradient(circle at top right, rgba(99, 102, 241, 0.15), transparent 40%),
+                    radial-gradient(circle at bottom left, rgba(16, 185, 129, 0.1), transparent 40%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Glassmorphism Utilities ─────────────────────────── */
+
+.glass-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--card-border);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
 }
 
 /* ── Login view ──────────────────────────────────────── */
@@ -24,102 +55,140 @@ body {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background: #eaeaea;
+  padding: 20px;
 }
 
 .login-box {
-  width: 340px;
-  background: #fff;
-  border: 1px solid #d0d0d0;
-  border-radius: 5px;
-  padding: 28px 24px 24px;
+  width: 100%;
+  max-width: 380px;
+  padding: 40px 32px;
+  animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slideUpFade {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .login-box h1 {
-  font-size: 15px;
-  font-weight: 600;
-  margin-bottom: 20px;
-  color: #1a1a1a;
-  padding-bottom: 14px;
-  border-bottom: 1px solid #eee;
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 28px;
+  color: var(--text-main);
+  text-align: center;
+  letter-spacing: -0.02em;
+}
+
+.login-box h1::after {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 3px;
+  background: var(--accent);
+  margin: 12px auto 0;
+  border-radius: 2px;
 }
 
 .login-box label {
   display: block;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 500;
-  color: #555;
-  margin-bottom: 3px;
+  color: var(--text-muted);
+  margin-bottom: 6px;
 }
 
 .login-box input {
   width: 100%;
-  padding: 7px 8px;
-  font-size: 13px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  margin-bottom: 12px;
+  padding: 12px 14px;
+  font-size: 14px;
+  color: var(--text-main);
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: 8px;
+  margin-bottom: 20px;
   font-family: inherit;
+  transition: all 0.2s ease;
 }
 
 .login-box input:focus {
   outline: none;
-  border-color: #0969da;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-glow);
 }
 
-.login-box button {
+.login-box button[type="submit"] {
   width: 100%;
+  padding: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.auth-toggle {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 24px;
+  text-align: center;
 }
 
 /* ── App layout ──────────────────────────────────────── */
 
 #app-view {
-  max-width: 860px;
+  max-width: 900px;
   margin: 0 auto;
-  padding: 0 20px 40px;
+  padding: 32px 20px 60px;
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 header {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 14px 0;
-  border-bottom: 1px solid #ddd;
-  margin-bottom: 24px;
+  gap: 16px;
+  padding: 16px 24px;
+  margin-bottom: 32px;
 }
 
 .header-title {
-  font-weight: 600;
-  font-size: 14px;
-  color: #333;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #fff, #94a3b8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .header-meta {
-  font-size: 12px;
-  color: #777;
+  font-size: 13px;
+  color: var(--text-muted);
   margin-left: auto;
+  font-weight: 500;
 }
 
 /* ── Sections ────────────────────────────────────────── */
 
 .section {
   margin-bottom: 32px;
+  padding: 24px;
 }
 
 .section h2 {
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: #555;
+  color: var(--text-main);
   margin-bottom: 8px;
+  letter-spacing: -0.01em;
 }
 
 .section-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 8px;
+  margin-bottom: 16px;
 }
 
 .section-header h2 {
@@ -127,28 +196,32 @@ header {
 }
 
 .hint {
-  font-size: 12px;
-  color: #777;
-  margin-bottom: 10px;
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 16px;
 }
 
 /* ── Drop zone ───────────────────────────────────────── */
 
 .drop-zone {
-  border: 1px dashed #bbb;
-  border-radius: 4px;
-  padding: 28px 16px;
+  border: 2px dashed var(--input-border);
+  border-radius: 10px;
+  padding: 40px 20px;
   text-align: center;
-  color: #888;
-  font-size: 13px;
+  color: var(--text-muted);
+  font-size: 14px;
+  font-weight: 500;
   cursor: pointer;
-  transition: border-color 0.15s, background 0.15s;
+  background: rgba(15, 23, 42, 0.4);
+  transition: all 0.25s ease;
 }
 
 .drop-zone:hover,
 .drop-zone.drag-over {
-  border-color: #0969da;
-  background: #f0f6ff;
+  border-color: var(--accent);
+  background: rgba(99, 102, 241, 0.1);
+  color: var(--text-main);
+  transform: scale(1.01);
 }
 
 /* ── Selected file ───────────────────────────────────── */
@@ -156,68 +229,84 @@ header {
 .selected-file {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  margin-top: 8px;
-  padding: 6px 8px;
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 3px;
+  gap: 12px;
+  font-size: 14px;
+  margin-top: 16px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--input-border);
+  border-radius: 8px;
 }
 
 #selected-name {
-  font-weight: 500;
+  font-weight: 600;
+  color: var(--text-main);
   word-break: break-all;
 }
 
 #selected-size {
-  color: #777;
+  color: var(--text-muted);
   font-size: 12px;
+  margin-left: auto;
 }
 
 /* ── Buttons ─────────────────────────────────────────── */
 
 button {
   font-family: inherit;
-  font-size: 13px;
-  padding: 6px 14px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  background: #fff;
-  color: #1a1a1a;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 6px;
+  background: var(--text-main);
+  color: #0f172a;
   cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 button:hover:not(:disabled) {
-  background: #f0f0f0;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+}
+
+button:active:not(:disabled) {
+  transform: translateY(0);
 }
 
 button:disabled {
-  opacity: 0.4;
+  opacity: 0.5;
   cursor: not-allowed;
 }
 
 #upload-btn {
-  margin-top: 10px;
-  background: #1a1a1a;
+  margin-top: 16px;
+  background: var(--accent);
   color: #fff;
-  border-color: #1a1a1a;
+  font-weight: 600;
 }
 
 #upload-btn:hover:not(:disabled) {
-  background: #333;
+  background: var(--accent-hover);
+  box-shadow: 0 4px 16px var(--accent-glow);
 }
 
 .link-btn {
   background: none;
   border: none;
   padding: 0;
-  color: #0969da;
-  font-size: 12px;
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 500;
   cursor: pointer;
+  box-shadow: none;
 }
 
 .link-btn:hover {
+  background: none;
+  color: #818cf8;
+  transform: none;
+  box-shadow: none;
   text-decoration: underline;
 }
 
@@ -225,110 +314,135 @@ button:disabled {
 
 table {
   width: 100%;
-  border-collapse: collapse;
-  font-size: 13px;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 14px;
 }
 
 th {
   text-align: left;
-  font-weight: 500;
-  font-size: 11px;
+  font-weight: 600;
+  font-size: 12px;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: #777;
-  padding: 6px 8px;
-  border-bottom: 1px solid #ddd;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--input-border);
 }
 
 td {
-  padding: 7px 8px;
-  border-bottom: 1px solid #eee;
+  padding: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   vertical-align: middle;
+  color: var(--text-main);
 }
 
 tr:last-child td {
   border-bottom: none;
 }
 
+tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+
 .col-id {
   font-family: "SF Mono", "Menlo", "Consolas", monospace;
-  font-size: 12px;
-  color: #555;
+  font-size: 13px;
+  color: var(--text-muted);
 }
 
 .col-name {
   word-break: break-all;
+  font-weight: 500;
 }
 
 .col-type {
-  font-size: 12px;
-  color: #555;
+  font-size: 13px;
+  color: var(--text-muted);
 }
 
 .col-time {
-  font-size: 12px;
-  color: #777;
+  font-size: 13px;
+  color: var(--text-muted);
   white-space: nowrap;
 }
 
 /* ── Status badges ───────────────────────────────────── */
 
 .status {
-  display: inline-block;
-  font-size: 11px;
-  font-weight: 500;
-  padding: 2px 7px;
-  border-radius: 3px;
-  text-transform: lowercase;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  text-transform: capitalize;
+  letter-spacing: 0.02em;
 }
 
 .status-processing {
-  background: #fff3cd;
-  color: #856404;
+  background: rgba(245, 158, 11, 0.15);
+  color: var(--warning);
+  border: 1px solid rgba(245, 158, 11, 0.2);
 }
 
 .status-completed,
 .status-done {
-  background: #d4edda;
-  color: #155724;
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--success);
+  border: 1px solid rgba(16, 185, 129, 0.2);
 }
 
 .status-failed,
 .status-error {
-  background: #f8d7da;
-  color: #721c24;
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--danger);
+  border: 1px solid rgba(239, 68, 68, 0.2);
 }
 
 .status-pending {
-  background: #e9ecef;
-  color: #555;
+  background: rgba(148, 163, 184, 0.15);
+  color: var(--text-muted);
+  border: 1px solid rgba(148, 163, 184, 0.2);
 }
 
 /* ── Inline messages ─────────────────────────────────── */
 
 .error {
   font-size: 13px;
-  color: #b91c1c;
-  margin-top: 6px;
+  color: #fca5a5;
+  margin-top: 8px;
+  padding: 10px 12px;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 6px;
 }
 
 .success {
   font-size: 13px;
-  color: #155724;
-  margin-top: 6px;
+  color: #6ee7b7;
+  margin-top: 8px;
+  padding: 10px 12px;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  border-radius: 6px;
 }
 
 /* ── Delete btn in table ─────────────────────────────── */
 
 .delete-btn {
-  font-size: 11px;
-  color: #b91c1c;
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
+  font-size: 12px;
+  color: var(--danger);
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid transparent;
+  padding: 6px 10px;
+  border-radius: 4px;
 }
 
 .delete-btn:hover {
-  text-decoration: underline;
+  background: var(--danger);
+  color: #fff;
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
 }
