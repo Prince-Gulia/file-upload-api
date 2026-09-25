@@ -78,11 +78,13 @@ function formatTime(iso) {
 function showMsg(el, text) {
   el.textContent = text;
   el.hidden = false;
+  el.style.display = "block";
 }
 
 function hideMsg(el) {
   el.textContent = "";
   el.hidden = true;
+  el.style.display = "none";
 }
 
 const ALLOWED_TYPES = [
@@ -124,7 +126,9 @@ async function apiFetch(path, opts = {}) {
 
 function showApp() {
   loginView.hidden = true;
+  loginView.style.display = "none";
   appView.hidden = false;
+  appView.style.display = "block";
   userEmailEl.textContent = userEmail;
   loadJobs();
   startPolling();
@@ -132,7 +136,9 @@ function showApp() {
 
 function showLogin() {
   loginView.hidden = false;
+  loginView.style.display = "flex";
   appView.hidden = true;
+  appView.style.display = "none";
   stopPolling();
 }
 
@@ -187,7 +193,9 @@ logoutBtn.addEventListener("click", logout);
 
 showSignupBtn.addEventListener("click", () => {
   loginForm.hidden = true;
+  loginForm.style.display = "none";
   signupForm.hidden = false;
+  signupForm.style.display = "block";
   hideMsg(loginError);
   hideMsg(signupError);
   hideMsg(signupSuccess);
@@ -195,7 +203,9 @@ showSignupBtn.addEventListener("click", () => {
 
 showLoginBtn.addEventListener("click", () => {
   signupForm.hidden = true;
+  signupForm.style.display = "none";
   loginForm.hidden = false;
+  loginForm.style.display = "block";
   hideMsg(loginError);
   hideMsg(signupError);
   hideMsg(signupSuccess);
