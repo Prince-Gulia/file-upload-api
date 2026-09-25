@@ -24,17 +24,24 @@ body {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
+  background: #eaeaea;
 }
 
 .login-box {
-  width: 320px;
+  width: 340px;
+  background: #fff;
+  border: 1px solid #d0d0d0;
+  border-radius: 5px;
+  padding: 28px 24px 24px;
 }
 
 .login-box h1 {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
   margin-bottom: 20px;
-  color: #333;
+  color: #1a1a1a;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #eee;
 }
 
 .login-box label {
