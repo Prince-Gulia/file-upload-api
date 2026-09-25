@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>File Processing</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Login -->
+  <div id="login-view">
+    <div class="login-box">
+      <h1>file-processing</h1>
+      <form id="login-form">
+        <label for="login-email">Email</label>
+        <input type="email" id="login-email" name="email" required autocomplete="email">
+        <label for="login-password">Password</label>
+        <input type="password" id="login-password" name="password" required autocomplete="current-password">
+        <button type="submit" id="login-btn">Log in</button>
+        <p id="login-error" class="error" hidden></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- App -->
+  <div id="app-view" hidden>
+    <header>
+      <span class="header-title">file-processing</span>
+      <span id="user-email" class="header-meta"></span>
+      <button id="logout-btn" class="link-btn">Log out</button>
+    </header>
+
+    <main>
+      <!-- Upload section -->
+      <section class="section">
+        <h2>Upload file</h2>
+        <p class="hint">Images (JPEG, PNG, WebP) and PDFs, up to 10 MB.</p>
+
+        <div id="drop-zone" class="drop-zone">
+          <span id="drop-label">Drag a file here or click to select</span>
+          <input type="file" id="file-input" accept="image/png,image/jpeg,image/webp,application/pdf" hidden>
+        </div>
+
+        <div id="selected-file" class="selected-file" hidden>
+          <span id="selected-name"></span>
+          <span id="selected-size"></span>
+          <button id="clear-file" class="link-btn">remove</button>
+        </div>
+
+        <button id="upload-btn" disabled>Upload</button>
+        <p id="upload-error" class="error" hidden></p>
+        <p id="upload-success" class="success" hidden></p>
+      </section>
+
+      <!-- Jobs table -->
+      <section class="section">
+        <div class="section-header">
+          <h2>Jobs</h2>
+          <button id="refresh-btn" class="link-btn">Refresh</button>
+        </div>
+        <p id="jobs-error" class="error" hidden></p>
+        <p id="jobs-empty" class="hint" hidden>No files uploaded yet.</p>
+        <div id="jobs-table-wrap" hidden>
+          <table id="jobs-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Filename</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Uploaded</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="jobs-body"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

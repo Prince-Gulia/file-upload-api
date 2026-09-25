@@ -8,13 +8,11 @@ require('./workers/fileWorker');
 const authRoutes = require('./routes/authRoutes.js');
 const uploadRoutes = require('./routes/uploadRoutes.js');
 
+const path = require('path');
 const app = express();
 app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')));
 
-//Basic Server live run route
-app.get('/' , (req, res) => {
-    res.json({ message : "File upload API is running" })
-});
 
 
 app.use('/auth', authRoutes);
