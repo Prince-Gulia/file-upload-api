@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>File Processing</title>
+  <title>Login - File Processing</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -19,9 +19,9 @@
       <!-- Login form -->
       <form id="login-form">
         <label for="login-email">Email</label>
-        <input type="email" id="login-email" name="email" required autocomplete="email">
+        <input type="email" id="login-email" name="email" required autocomplete="email" placeholder="name@example.com">
         <label for="login-password">Password</label>
-        <input type="password" id="login-password" name="password" required autocomplete="current-password">
+        <input type="password" id="login-password" name="password" required autocomplete="current-password" placeholder="••••••••">
         <button type="submit" id="login-btn">Log in</button>
         <p id="login-error" class="error" hidden></p>
         <p class="auth-toggle">No account? <button type="button" id="show-signup" class="link-btn">Sign up</button></p>
@@ -30,9 +30,9 @@
       <!-- Signup form -->
       <form id="signup-form" hidden>
         <label for="signup-email">Email</label>
-        <input type="email" id="signup-email" name="email" required autocomplete="email">
+        <input type="email" id="signup-email" name="email" required autocomplete="email" placeholder="name@example.com">
         <label for="signup-password">Password</label>
-        <input type="password" id="signup-password" name="password" required autocomplete="new-password">
+        <input type="password" id="signup-password" name="password" required autocomplete="new-password" placeholder="••••••••">
         <button type="submit" id="signup-btn">Sign up</button>
         <p id="signup-error" class="error" hidden></p>
         <p id="signup-success" class="success" hidden></p>
@@ -41,63 +41,6 @@
     </div>
   </div>
 
-  <!-- App -->
-  <div id="app-view" hidden>
-    <header class="glass-card" style="margin-bottom: 32px; border-radius: 16px;">
-      <span class="header-title">file-processing</span>
-      <span id="user-email" class="header-meta"></span>
-      <button id="logout-btn" class="link-btn">Log out</button>
-    </header>
-
-    <main>
-      <!-- Upload section -->
-      <section class="section glass-card">
-        <h2>Upload file</h2>
-        <p class="hint">Images (JPEG, PNG, WebP) and PDFs, up to 10 MB.</p>
-
-        <div id="drop-zone" class="drop-zone">
-          <span id="drop-label">Drag a file here or click to select</span>
-          <input type="file" id="file-input" accept="image/png,image/jpeg,image/webp,application/pdf" hidden>
-        </div>
-
-        <div id="selected-file" class="selected-file" hidden>
-          <span id="selected-name"></span>
-          <span id="selected-size"></span>
-          <button id="clear-file" class="link-btn">remove</button>
-        </div>
-
-        <button id="upload-btn" disabled>Upload</button>
-        <p id="upload-error" class="error" hidden></p>
-        <p id="upload-success" class="success" hidden></p>
-      </section>
-
-      <!-- Jobs table -->
-      <section class="section glass-card">
-        <div class="section-header">
-          <h2>Jobs</h2>
-          <button id="refresh-btn" class="link-btn">Refresh</button>
-        </div>
-        <p id="jobs-error" class="error" hidden></p>
-        <p id="jobs-empty" class="hint" hidden>No files uploaded yet.</p>
-        <div id="jobs-table-wrap" hidden>
-          <table id="jobs-table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Filename</th>
-                <th>Type</th>
-                <th>Status</th>
-                <th>Uploaded</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody id="jobs-body"></tbody>
-          </table>
-        </div>
-      </section>
-    </main>
-  </div>
-
-  <script src="app.js"></script>
+  <script src="auth.js"></script>
 </body>
 </html>
