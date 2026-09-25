@@ -69,6 +69,19 @@
     </main>
   </div>
 
+  <!-- Text Preview Modal -->
+  <div id="text-modal" class="modal-overlay" hidden>
+    <div class="modal-card glass-card">
+      <div class="modal-header">
+        <h3 id="modal-title">Extracted PDF Text</h3>
+        <button id="close-modal-btn" class="link-btn">✕ Close</button>
+      </div>
+      <div class="modal-body">
+        <pre id="modal-text-content">Loading extracted text…</pre>
+      </div>
+    </div>
+  </div>
+
   <script src="dashboard.js"></script>
 </body>
 </html>

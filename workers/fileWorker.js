@@ -54,12 +54,15 @@ const fileWorker = new Worker ('file-processing', async (job) => {
                 extractedText += pageText + '\n';
            }
 
-            //Uploading original pdf to cloudinary
+            // Uploading original pdf to cloudinary with format pdf so browser displays it properly
+            const cleanName = (originalname || 'document').replace(/\.pdf$/i, '').replace(/[^a-zA-Z0-9_-]/g, '_');
             const uploadResult = await new Promise((resolve, reject)=>{
                 cloudinary.uploader.upload_stream(
                     {
                         folder : 'file-upload-api/pdfs',
-                        resource_type : 'raw'
+                        resource_type : 'image',
+                        format : 'pdf',
+                        public_id : `${Date.now()}_${cleanName}`
                     },
                     (error, result) => {
                         if(error) reject(error);

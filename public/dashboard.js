@@ -261,11 +261,18 @@ function renderJobs(files) {
       <td><span class="status status-${f.status}">${f.status}</span></td>
       <td class="col-time">${formatTime(f.created_at)}</td>
       <td>
-        ${
-          f.cloudinary_url
-            ? `<a href="${f.cloudinary_url}" target="_blank" rel="noopener noreferrer" class="view-btn">View File</a>`
-            : '<span class="hint">—</span>'
-        }
+        <div style="display: flex; gap: 8px; align-items: center;">
+          ${
+            f.cloudinary_url
+              ? `<a href="${f.cloudinary_url}" target="_blank" rel="noopener noreferrer" class="view-btn">View File</a>`
+              : '<span class="hint">—</span>'
+          }
+          ${
+            f.file_type === 'pdf' && f.status === 'done'
+              ? `<button class="view-text-btn link-btn" data-id="${f.id}" data-name="${escapeHtml(f.original_name)}">View Text</button>`
+              : ''
+          }
+        </div>
       </td>
       <td><button class="delete-btn" data-id="${f.id}">delete</button></td>
     </tr>`
@@ -279,9 +286,48 @@ function escapeHtml(str) {
   return div.innerHTML;
 }
 
-// ── Delete ─────────────────────────────────────────────
+// ── Modal & Actions ────────────────────────────────────
+
+const textModal = document.getElementById("text-modal");
+const closeModalBtn = document.getElementById("close-modal-btn");
+const modalTitle = document.getElementById("modal-title");
+const modalTextContent = document.getElementById("modal-text-content");
+
+if (closeModalBtn) {
+  closeModalBtn.addEventListener("click", () => {
+    if (textModal) {
+      textModal.hidden = true;
+      textModal.style.display = "none";
+    }
+  });
+}
 
 jobsBody.addEventListener("click", async (e) => {
+  if (e.target.classList.contains("view-text-btn")) {
+    const id = e.target.dataset.id;
+    const name = e.target.dataset.name;
+    if (modalTitle) modalTitle.textContent = "Extracted Text: " + name;
+    if (modalTextContent) modalTextContent.textContent = "Loading extracted text…";
+    if (textModal) {
+      textModal.hidden = false;
+      textModal.style.display = "flex";
+    }
+    try {
+      const res = await apiFetch(ENDPOINTS.file + "/" + id);
+      const data = await safeParseJson(res);
+      if (res.ok && data.file) {
+        if (modalTextContent) {
+          modalTextContent.textContent = data.file.extracted_text || "No text extracted from this document.";
+        }
+      } else {
+        if (modalTextContent) modalTextContent.textContent = "Failed to load extracted text.";
+      }
+    } catch (err) {
+      if (modalTextContent) modalTextContent.textContent = "Error: " + err.message;
+    }
+    return;
+  }
+
   if (!e.target.classList.contains("delete-btn")) return;
   const id = e.target.dataset.id;
   e.target.textContent = "…";
@@ -291,7 +337,7 @@ jobsBody.addEventListener("click", async (e) => {
       method: "DELETE",
     });
     if (!res.ok) {
-      const data = await res.json();
+      const data = await safeParseJson(res);
       throw new Error(data.message || "Delete failed");
     }
     loadJobs();
