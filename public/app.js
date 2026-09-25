@@ -384,6 +384,13 @@ function renderJobs(files) {
       <td class="col-type">${f.file_type || "—"}</td>
       <td><span class="status status-${f.status}">${f.status}</span></td>
       <td class="col-time">${formatTime(f.created_at)}</td>
+      <td>
+        ${
+          f.cloudinary_url
+            ? `<a href="${f.cloudinary_url}" target="_blank" rel="noopener noreferrer" class="view-btn">View File</a>`
+            : '<span class="hint">—</span>'
+        }
+      </td>
       <td><button class="delete-btn" data-id="${f.id}">delete</button></td>
     </tr>`
     )
