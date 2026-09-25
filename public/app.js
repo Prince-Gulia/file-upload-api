@@ -3,6 +3,7 @@
 const API_BASE_URL = "https://file-upload-api-k981.onrender.com";
 const ENDPOINTS = {
   login: "/auth/login",
+  signup: "/auth/signup",
   upload: "/upload",        // POST  multipart, field "file"
   files: "/files",          // GET   list all files
   file: "/files",           // GET   /files/:id  (id appended)
@@ -25,6 +26,15 @@ const loginEmailInput = document.getElementById("login-email");
 const loginPasswordInput = document.getElementById("login-password");
 const loginError = document.getElementById("login-error");
 const loginBtn = document.getElementById("login-btn");
+
+const signupForm = document.getElementById("signup-form");
+const signupEmailInput = document.getElementById("signup-email");
+const signupPasswordInput = document.getElementById("signup-password");
+const signupError = document.getElementById("signup-error");
+const signupSuccess = document.getElementById("signup-success");
+const signupBtn = document.getElementById("signup-btn");
+const showSignupBtn = document.getElementById("show-signup");
+const showLoginBtn = document.getElementById("show-login");
 
 const userEmailEl = document.getElementById("user-email");
 const logoutBtn = document.getElementById("logout-btn");
@@ -172,6 +182,74 @@ loginForm.addEventListener("submit", async (e) => {
 });
 
 logoutBtn.addEventListener("click", logout);
+
+// ── Signup ─────────────────────────────────────────────
+
+showSignupBtn.addEventListener("click", () => {
+  loginForm.hidden = true;
+  signupForm.hidden = false;
+  hideMsg(loginError);
+  hideMsg(signupError);
+  hideMsg(signupSuccess);
+});
+
+showLoginBtn.addEventListener("click", () => {
+  signupForm.hidden = true;
+  loginForm.hidden = false;
+  hideMsg(loginError);
+  hideMsg(signupError);
+  hideMsg(signupSuccess);
+});
+
+signupForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  hideMsg(signupError);
+  hideMsg(signupSuccess);
+  signupBtn.disabled = true;
+  signupBtn.textContent = "Signing up…";
+
+  const email = signupEmailInput.value.trim();
+  const password = signupPasswordInput.value;
+
+  try {
+    const res = await fetch(API_BASE_URL + ENDPOINTS.signup, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      throw new Error(data.message || "Signup failed");
+    }
+
+    // Auto log in after successful signup
+    signupBtn.textContent = "Logging in…";
+    const loginRes = await fetch(API_BASE_URL + ENDPOINTS.login, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+    const loginData = await loginRes.json();
+    if (loginRes.ok && loginData.accessToken) {
+      accessToken = loginData.accessToken;
+      refreshToken = loginData.refreshToken;
+      userEmail = email;
+      localStorage.setItem("access_token", accessToken);
+      localStorage.setItem("refresh_token", refreshToken);
+      localStorage.setItem("user_email", userEmail);
+      signupForm.reset();
+      showApp();
+    } else {
+      showMsg(signupSuccess, "Account created! Please switch to login.");
+      loginEmailInput.value = email;
+    }
+  } catch (err) {
+    showMsg(signupError, err.message);
+  } finally {
+    signupBtn.disabled = false;
+    signupBtn.textContent = "Sign up";
+  }
+});
 
 // ── File selection ─────────────────────────────────────
 
