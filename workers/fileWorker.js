@@ -4,10 +4,11 @@ const pdfjsLib = require('pdfjs-dist/legacy/build/pdf.mjs');
 const cloudinary = require('../config/cloudinary');
 const pool = require('../config/db');
 const redis = require('../config/redis');
+const path = require('path');
 require('dotenv').config();
 
 const fileWorker = new Worker ('file-processing', async (job) => {
-    const { fileId, buffer, mimetype, isImage, isPDF } = job.data;
+    const { fileId, buffer, mimetype, originalname, isImage, isPDF } = job.data;
 
     const fileBuffer = Buffer.from(buffer, 'base64');
 
@@ -42,7 +43,12 @@ const fileWorker = new Worker ('file-processing', async (job) => {
         } else if (isPDF){
 
             //Extracting data from PDF
-           const loadingTask = pdfjsLib.getDocument({ data : new Uint8Array(fileBuffer) });
+           let fontPath = path.join(__dirname, '../node_modules/pdfjs-dist/standard_fonts/').replace(/\\/g, '/');
+           if (!fontPath.endsWith('/')) fontPath += '/';
+           const loadingTask = pdfjsLib.getDocument({
+               data : new Uint8Array(fileBuffer),
+               standardFontDataUrl : fontPath
+           });
            const pdfDoc = await loadingTask.promise;
 
            let extractedText = '';
